@@ -6,7 +6,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitConfig {
 
-    fun getRetrofit(): Retrofit {
+    fun getRetrofitUser(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://bank-app-test.herokuapp.com/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+
+    fun getRetrofitDetail(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://bank-app-test.herokuapp.com/api/")
             .addConverterFactory(GsonConverterFactory.create())

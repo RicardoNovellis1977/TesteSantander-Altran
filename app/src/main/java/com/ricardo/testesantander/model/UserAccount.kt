@@ -2,22 +2,17 @@ package com.ricardo.testesantander.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class UserAccount {
-
+data class UserAccount(
     @SerializedName("userId")
-    @Expose
-    var userId: Int? = null
+    var userId: Int,
     @SerializedName("name")
-    @Expose
-    var name: String? = null
-    @SerializedName("bankAccount")
-    @Expose
-    var bankAccount: String? = null
-    @SerializedName("agency")
-    @Expose
-    var agency: Int? = null
-    @SerializedName("balance")
-    @Expose
-    var balance: Double? = null
-}
+var name: String,
+@SerializedName("bankAccount")
+var bankAccount: String,
+@SerializedName("agency")
+var agency: Int,
+@SerializedName("balance")
+var balance: Double) :Serializable
+

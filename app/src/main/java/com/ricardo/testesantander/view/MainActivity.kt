@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.ricardo.testesantander.R
 import com.ricardo.testesantander.model.DAOService.DAOService
 import com.ricardo.testesantander.helper.WebService
+import com.ricardo.testesantander.model.UserAccountParse
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), WebService {
@@ -20,19 +21,20 @@ class MainActivity : AppCompatActivity(), WebService {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        val daoService : DAOService =
-            DAOService(this)
-        daoService.callService(user,password)
         buttonTeste.setOnClickListener(View.OnClickListener {
-
-            startActivity(Intent(this, DetailActivity::class.java))
+            val daoService : DAOService =
+                DAOService(this)
+            daoService.callService(user,password)
         })
     }
 
     override fun success(obj: Any?) {
 
-       // var objto : UserAccount = obj as UserAccount
+        val objeto : UserAccountParse = obj as UserAccountParse
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("userAccountParse", objeto.userAccount)
+        startActivity(intent)
+
 
 
     }

@@ -1,10 +1,8 @@
 package com.ricardo.testesantander.helper
 
-import com.ricardo.testesantander.model.UserLogin
+import com.ricardo.testesantander.model.*
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface Service {
@@ -14,5 +12,10 @@ interface Service {
     fun validateUser(
         @Field("user") user: String?,
         @Field("password") password: String?
-    ): Call<UserLogin>?
+    ): Call<UserAccountParse>?
+
+    @GET("statements/{idUser}")
+    fun getDatail(
+        @Path("idUser") idUser : Int
+    ):Call<Launches>
 }
