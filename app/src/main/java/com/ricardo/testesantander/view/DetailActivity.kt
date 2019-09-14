@@ -21,7 +21,7 @@ class DetailActivity : AppCompatActivity(),WebServiceDatail {
         val bundle : UserAccount= intent.getSerializableExtra("userAccountParse") as UserAccount
         textNome.text = bundle.name
         textConta.text = bundle.bankAccount + "/" + bundle.agency
-        textValor.text = bundle.balance.toString()
+        textValor.text = formatValor(bundle.balance.toString().reversed())
 
         val daoServiceDatail : DAOServiceDetail = DAOServiceDetail(this)
         daoServiceDatail.callService(bundle.userId)
@@ -40,5 +40,10 @@ class DetailActivity : AppCompatActivity(),WebServiceDatail {
     override fun erro(throwable: Throwable?) {
         Toast.makeText(this, throwable.toString(), Toast.LENGTH_LONG).show()
 
+    }
+    fun formatValor(valor : String): String {
+        valor.reversed()
+        return valor.substring(0, 2) + "," + valor.substring(2, 5) + "." +
+                valor.substring(5,8) + "."
     }
 }

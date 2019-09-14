@@ -18,7 +18,7 @@
         <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="User" android:id="@+id/textTest"/>
+                android:hint="User" android:id="@+id/textUser"/>
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
@@ -31,7 +31,7 @@
         <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"/>
+                android:hint="Password" android:id="@+id/textPassword"/>
     </android.support.design.widget.TextInputLayout>
     <Button
             android:text="login"
