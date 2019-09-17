@@ -1,12 +1,9 @@
 package com.ricardo.testesantander.model.DAOService
 
-import com.google.gson.JsonParser
 import com.ricardo.testesantander.helper.RetrofitConfig
 import com.ricardo.testesantander.helper.Service
 import com.ricardo.testesantander.helper.WebService
-import com.ricardo.testesantander.model.UserAccount
 import com.ricardo.testesantander.model.UserAccountParse
-import com.ricardo.testesantander.model.UserLogin
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,7 +16,7 @@ class DAOService(listener: WebService?) {
 
     fun callService(user: String, password: String) {
 
-        call = serviceUser!!.validateUser(user , password)
+        call = serviceUser!!.validateUser(user, password)
 
         call?.enqueue(object : Callback<UserAccountParse> {
             override fun onFailure(call: Call<UserAccountParse>, t: Throwable) {
@@ -30,10 +27,8 @@ class DAOService(listener: WebService?) {
 
                 if (response.isSuccessful) {
                     listener?.success(response.body())
-
                 }
             }
-
         })
     }
 }

@@ -40,7 +40,7 @@ class DetailAdapter(
 
         fun bind(launches: Launches, p1: Int) {
 
-            val nf: NumberFormat = DecimalFormat(".00")
+            val nf: NumberFormat = DecimalFormat(",##0.00")
 
             val dataUs: String? = launches.statementList!!.get(p1).date
             val oldFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")

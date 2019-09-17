@@ -1,6 +1,7 @@
 package com.ricardo.testesantander.view
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -14,8 +15,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), WebService {
 
-    private lateinit var user : String
-    private lateinit var password : String
+    private lateinit var user: String
+    private lateinit var password: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,34 +27,40 @@ class MainActivity : AppCompatActivity(), WebService {
             user = textUser.text.toString()
             password = textPassword.text.toString()
 
-            if (user.length == 11 || isValid(user)){
-                if (senhaForte(password)){
-                    val daoService : DAOService =
+            if (isCpf(user) || isValid(user)) {
+                if (senhaForte(password)) {
+
+                    salvarUsuario(user, password)
+
+                    val daoService: DAOService =
                         DAOService(this)
-                    daoService.callService(user,password)
-                }else{
-                    Toast.makeText(this,"Senha Fraca",Toast.LENGTH_LONG).show()
+                    daoService.callService(user, password)
+                } else {
+                    Toast.makeText(this, "Senha Fraca", Toast.LENGTH_LONG).show()
                 }
-            }else{
-                Toast.makeText(this,"Cpf ou Email inválido",Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Cpf ou Email inválido", Toast.LENGTH_LONG).show()
             }
         })
+        recuperarLogin()
     }
+
     override fun success(obj: Any?) {
 
-        val objeto : UserAccountParse = obj as UserAccountParse
+        val objeto: UserAccountParse = obj as UserAccountParse
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("userAccountParse", objeto.userAccount)
         startActivity(intent)
 
     }
+
     override fun erro(throwable: Throwable?) {
 
         Toast.makeText(this, throwable.toString(), Toast.LENGTH_LONG).show()
-
     }
+
     fun senhaForte(senha: String): Boolean {
-        if (senha.length < 6) return false
+        if (senha.length < 4) return false
         var achouNumero = false
         var achouMaiuscula = false
         var achouMinuscula = false
@@ -75,5 +82,38 @@ class MainActivity : AppCompatActivity(), WebService {
     internal fun isValid(email: String): Boolean {
         val regex = Regex("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")
         return email.matches(regex)
+    }
+
+    fun isCpf(user: String): Boolean {
+        if (user.length != 11) return false
+        var achouNumero = false
+
+        for (c in user.toCharArray()) {
+            if (c >= '0' && c <= '9') {
+                achouNumero = true
+            } else {
+                Toast.makeText(this, "Cpf ou Email inválido", Toast.LENGTH_LONG).show()
+            }
+        }
+        return achouNumero
+    }
+
+    fun salvarUsuario(user: String, password: String) {
+        val preference: SharedPreferences = getSharedPreferences("login", 0)
+        val editor: SharedPreferences.Editor = preference.edit()
+
+        editor.putString("user", user)
+        editor.putString("password", password)
+        editor.commit()
+    }
+
+    fun recuperarLogin() {
+
+        val preference: SharedPreferences = getSharedPreferences("login", 0)
+        val userLogado = preference.getString("user", "Digite seu E-mail ou Cpf")
+        val passwordLogado = preference.getString("password", "  Senha fraca")
+        textUser.setText(userLogado)
+        textPassword.setText(passwordLogado)
+
     }
 }

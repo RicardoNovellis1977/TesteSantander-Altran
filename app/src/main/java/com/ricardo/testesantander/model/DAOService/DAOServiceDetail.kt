@@ -14,7 +14,7 @@ class DAOServiceDetail(listener: WebServiceDatail?) {
     private var call: Call<Launches>? = null
     val serviceUser = RetrofitConfig().getRetrofitUser().create(Service::class.java)
 
-    fun callService(idUser : Int) {
+    fun callService(idUser: Int) {
 
         call = serviceUser!!.getDatail(idUser)
 

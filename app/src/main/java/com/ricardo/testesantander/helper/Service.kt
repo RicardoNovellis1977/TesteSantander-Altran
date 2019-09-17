@@ -1,9 +1,9 @@
 package com.ricardo.testesantander.helper
 
-import com.ricardo.testesantander.model.*
+import com.ricardo.testesantander.model.Launches
+import com.ricardo.testesantander.model.UserAccountParse
 import retrofit2.Call
 import retrofit2.http.*
-
 
 interface Service {
 
@@ -16,6 +16,6 @@ interface Service {
 
     @GET("statements/{idUser}")
     fun getDatail(
-        @Path("idUser") idUser : Int
-    ):Call<Launches>
+        @Path("idUser") idUser: Int
+    ): Call<Launches>
 }

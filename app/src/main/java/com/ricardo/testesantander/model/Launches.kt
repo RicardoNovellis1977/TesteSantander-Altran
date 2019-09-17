@@ -10,5 +10,4 @@ class Launches {
     @SerializedName("error")
     @Expose
     var error: Error? = null
-
 }
