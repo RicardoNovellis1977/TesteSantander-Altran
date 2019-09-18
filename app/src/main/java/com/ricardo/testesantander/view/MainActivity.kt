@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity(), WebService {
             user = textUser.text.toString()
             password = textPassword.text.toString()
 
-            if (isCpf(user) || isValid(user)) {
-                if (senhaForte(password)) {
+            if (isCpf(user) || isEmailValid(user)) {
+                if (isSenhaForte(password)) {
 
                     salvarUsuario(user, password)
 
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), WebService {
         Toast.makeText(this, throwable.toString(), Toast.LENGTH_LONG).show()
     }
 
-    fun senhaForte(senha: String): Boolean {
+    fun isSenhaForte(senha: String): Boolean {
         if (senha.length < 4) return false
         var achouNumero = false
         var achouMaiuscula = false
@@ -79,23 +79,15 @@ class MainActivity : AppCompatActivity(), WebService {
         return achouNumero && achouMaiuscula && achouMinuscula && achouSimbolo
     }
 
-    internal fun isValid(email: String): Boolean {
+    internal fun isEmailValid(email: String): Boolean {
         val regex = Regex("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")
         return email.matches(regex)
     }
 
     fun isCpf(user: String): Boolean {
-        if (user.length != 11) return false
-        var achouNumero = false
 
-        for (c in user.toCharArray()) {
-            if (c >= '0' && c <= '9') {
-                achouNumero = true
-            } else {
-                Toast.makeText(this, "Cpf ou Email inválido", Toast.LENGTH_LONG).show()
-            }
-        }
-        return achouNumero
+        val regex = Regex("^([0-9]){3}\\.([0-9]){3}\\.([0-9]){3}-([0-9]){2}\$")
+        return user.matches(regex)
     }
 
     fun salvarUsuario(user: String, password: String) {
